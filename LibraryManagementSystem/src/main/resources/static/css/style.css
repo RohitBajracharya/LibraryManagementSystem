@@ -1,0 +1,87 @@
+:root { -
+	-navbar-text: 20px;
+}
+
+body {
+	background-color: #e2e2e2;
+}
+
+/* navbar */
+.navFont {
+	font-size: var(- -navbar-text);
+}
+
+/* side navbar */
+.sidebar {
+	width: 18%;
+	background: white;
+	height: 100vh;
+	position: fixed;
+	/* padding-top: 45px; */
+	z-index: 9999;
+	display: block;
+	border: 1px solid #e8e8e8;
+}
+
+.nav {
+	display: flex;
+	text-align: center;
+	border: 1px solid #e3e3e3;
+	justify-content: space-between;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.nav:hover {
+	cursor: pointer;
+	background-color: #c2c2c2;
+}
+
+.nav:hover .nav-items {
+	display: block;
+}
+
+.nav a {
+	color: black;
+	text-decoration: none;
+}
+
+.nav .nav-items {
+	display: none;
+	flex: 1;
+}
+
+.nav .nav-items .items {
+	display: inline-block;
+	background-color: #e5e5e5;
+	border: 1px solid #e8e8e8;
+	width: 16vw;
+}
+
+.nav .nav-items .items:hover {
+	background-color: #a2a2a2;
+}
+
+.hamburger {
+	display: none;
+	border: 1px solid black;
+}
+
+#hamburger {
+	border: 1px solid black;
+}
+
+/* side navbar ends here */
+.content {
+	margin-left: 20%;
+}
+
+.login-container {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.login{
+	width:450px;
+}
