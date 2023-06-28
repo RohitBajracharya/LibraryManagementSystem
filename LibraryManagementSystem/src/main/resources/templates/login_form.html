@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>LMS - Login</title>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="" th:href="@{/css/style.css}" />
+</head>
+<body>
+	<section>
+		<div class="login-container">
+
+			<div class="card login">
+				<div class="card-body">
+					<h1 class="text-center">Welcome, Admin</h1>
+					<h2 class="text-center">Login Here</h2>
+					<div th:if="${param.error}" class="alert alert-danger" role="alert">
+						Invalid Username and Password</div>
+					<div th:if="${param.logout}" class="alert alert-success" role="alert">
+						You have been logout</div>
+					<form method="post" th:action="@{/do_login}">
+						<div class="form-group">
+							<label for="exampleInputEmail1">Username</label> <input
+								type="text" name="username" class="form-control"
+								id="exampleInputEmail1" aria-describedby="emailHelp"
+								placeholder="Enter username">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Password</label> <input
+								type="password" name="password" class="form-control"
+								id="exampleInputPassword1" placeholder="Enter Password">
+						</div>
+						<div class="button text-center">
+							<button type="submit" class="btn btn-primary btn-block">Submit</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
