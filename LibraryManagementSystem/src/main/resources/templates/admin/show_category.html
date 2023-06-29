@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+	<section>
+		<div class="card">
+			<div class="card-body">
+				<h1 class="text-center mb-4">Categories</h1>
+				<table class="table mt-2 text-center">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">Category</th>
+							<th scope="col">Section</th>
+							<th scope="col">No of Books</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="c:${category}">
+							<th th:text="${c.cid}"></th>
+							<td th:text="${c.categoryName}"></td>
+							<td th:text="${c.section}"></td>
+							<td th:text="${c.noOfBooks}"></td>
+							<td>
+								<div class="action-btn d-inline-flex">
+									<form id="deleteCategoryForm"
+										th:action="@{'/admin/delete-category/'+${c.cid}}"
+										method="post">
+										<button class="btn btn-danger m-1">Delete</button>
+									</form>
+									<form th:action="@{'/admin/edit-category/'+${c.cid}}"
+										method="post">
+										<button type="submit" class="btn btn-primary m-1">Update</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="pagination-container d-flex justify-content-center">
+					<nav aria-label="Page navigation" class="mt-4">
+						<ul class="pagination">
+							<li th:if="${currentPage != 0}" class="page-item"><a
+								class="page-link " href="#"
+								th:href="@{'/admin/show-category/'+${currentPage-1}}">Previous</a></li>
+							<li th:classappend="${currentPage==i-1?'active':''}"
+								th:each="i:${#numbers.sequence(1,totalPages)}" class="page-item"><a
+								class="page-link" href="#"
+								th:href="@{'/admin/show-category/'+${i-1}}"><span
+									th:text="${i}"></span></a></li>
+							<li th:if="${currentPage+1 != totalPages}" class="page-item"><a
+								class="page-link" href="#"
+								th:href="@{'/admin/show-category/'+${currentPage+1}}">Next</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<script>
+		document.getElementById('deleteCategoryForm').addEventListener('submit', function(event) {
+	        event.preventDefault(); // Prevents the default form submission
+	        console.log('Form submission intercepted.');
+	        Swal.fire({
+	            title: 'Are you sure?',
+	            text: "You won't be able to revert this!",
+	            icon: 'warning',
+	            showCancelButton: true,
+	            confirmButtonColor: '#3085d6',
+	            cancelButtonColor: '#d33',
+	            confirmButtonText: 'Yes, delete it!'
+	        }).then((result) => {
+	            if (result.isConfirmed) {
+	                // Submit the form
+	            	 this.submit();
+	            }
+	        });
+	    });
+</script>
+	</section>
+</body>
+</html>
