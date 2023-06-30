@@ -7,12 +7,12 @@
 </head>
 <body>
 	<section>
-		<div class="card m-3 category-container">
+		<div class="card m-3">
 			<div class="card-body">
 				<h1 class="text-center">Add Category</h1>
 				<div class="container-fluid mt-1">
 					<div class="row">
-						<div class="col-md-8 offset-md-2">
+						<div class="col-md-10 offset-md-1">
 							<form novalidate="novalidate" method="POST" th:action="@{/admin/process-category}"
 								th:object=${category}>
 								<div class="form-group">
@@ -36,8 +36,10 @@
 										id="validationServer03Feedback" class="invalid-feedback">
 									</div>
 								</div>
-
-								<button type="submit" class="btn btn-info">Add Category</button>
+								<div class="text-center">
+									<button type="submit" class="btn btn-info m-3">Add
+										Category</button>
+								</div>
 							</form>
 						</div>
 					</div>
