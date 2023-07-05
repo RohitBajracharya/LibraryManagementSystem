@@ -1,5 +1,6 @@
 package com.lms.controller;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -38,18 +39,20 @@ public class BookController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 
+	// handler to open add Book form
 	@GetMapping("/addBook")
 	public String addBooks(Model model) {
 
 		List<String> category = this.categoryRepository.getAllCategoryName();
 		System.out.println("Category: " + category);
-		
+
 		model.addAttribute("title", "LMS - Add Book");
 		model.addAttribute("book", new Book());
 		model.addAttribute("category", category);
 		return "admin/add_book";
 	}
 
+	// handler to process add Book form data into database
 	@PostMapping("/processBook")
 	public String processBook(@ModelAttribute Book book, @RequestParam("categoryName") String categoryName,
 			@RequestParam("image") MultipartFile image, HttpSession session) {
@@ -81,11 +84,12 @@ public class BookController {
 		return "admin/add_book";
 	}
 
+	// handler to show Books present in database in table
 	@GetMapping("/showBooks/{page}")
 	public String showBooks(@PathVariable("page") Integer page, Model model) {
 		Pageable pageable = PageRequest.of(page, 5);
 		Page<Book> book = this.bookRepository.findAllBook(pageable);
-		System.out.println("book:"+book);
+		System.out.println("book:" + book);
 		model.addAttribute("title", "LMS - Show Category");
 		model.addAttribute("book", book);
 		model.addAttribute("currentPage", page);
@@ -93,6 +97,65 @@ public class BookController {
 		return "admin/show_books";
 	}
 
+	// handler to delete Book
+	@PostMapping("/delete-book/{bid}")
+	public String deleteBooks(@PathVariable("bid") int bid, HttpSession session) {
+		try {
+			Book book = this.bookRepository.findById(bid).get();
+			book.setCategory(null);
+			this.bookRepository.deleteById(bid);
+			session.setAttribute("message", new Message("Book Deleted Successfully", "success"));
+		} catch (Exception e) {
+			session.setAttribute("message", new Message("Book Failed to Delete", "danger"));
+			e.printStackTrace();
+		}
+		return "redirect:/admin/showBooks/0";
+	}
+
+	// handler to show edit Book form
+	@PostMapping("/edit-book/{bid}")
+	public String editBook(@PathVariable("bid") int bid, Model model) {
+		List<String> category = this.categoryRepository.getAllCategoryName();
+		Book book = this.bookRepository.findById(bid).get();
+		model.addAttribute("book", book);
+		model.addAttribute("category", category);
+		model.addAttribute("title", "LMS - Edit Book");
+		return "admin/edit_book";
+	}
+
+	// handler to update Book in database
+	@PostMapping("/update-book")
+	public String updateBook(@ModelAttribute Book book, HttpSession session,
+			@RequestParam("image") MultipartFile file, @RequestParam("categoryName") String categoryName) {
+		System.out.println("book id : "+book.getbId());
+		Book oldBook = this.bookRepository.findById(book.getbId()).get();
+		try {
+			Category category = this.categoryRepository.findByCategoryName(categoryName);
+			oldBook.setBookName(book.getBookName());
+			oldBook.setAuthorName(book.getAuthorName());
+			oldBook.setCategory(category);
+			oldBook.setQuantity(book.getQuantity());
+			if (!file.isEmpty()) {
+				File deleteFile = new ClassPathResource("static/img").getFile();
+				File oldImageFile = new File(deleteFile, oldBook.getImageUrl());
+				oldImageFile.delete();
+				File filePath = new ClassPathResource("static/img").getFile();
+				Path path = Paths.get(filePath.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				oldBook.setImageUrl(file.getOriginalFilename());
+
+			} else {
+				oldBook.setImageUrl(oldBook.getImageUrl());
+			}
+			this.bookRepository.save(oldBook);
+			session.setAttribute("message", new Message("Book Updated Successfully", "success"));
+		} catch (Exception e) {
+			session.setAttribute("message", new Message("Book Failed to Update", "danger"));
+		}
+		return "redirect:/admin/showBooks/0";
+	}
+
+	// method to update no of books available in each category
 	public int updateNoOfBook(int cid) {
 		int quantity = this.bookRepository.getQuantityByCategory(cid);
 		return quantity;

@@ -30,11 +30,11 @@
 							<td th:text="${b.quantity}"></td>
 							<td>
 								<div class="action-btn d-inline-flex">
-									<form id="deleteCategoryForm">
-										<input id="categoryId" class="categoryIdInput" type="hidden" th:value="${b.bId}" />
+									<form id="deleteBookForm">
+										<input id="bookId" class="bookIdInput" type="hidden" th:value="${b.bId}" />
 										<button class="btn btn-danger m-1 deleteBtn">Delete</button>
 									</form>
-									<form th:action="@{'/admin/edit-category/'+${b.bId}}"
+									<form th:action="@{'/admin/edit-book/'+${b.bId}}"
 										method="post">
 										<button type="submit" class="btn btn-primary m-1">Update</button>
 									</form>
@@ -69,8 +69,8 @@
       event.preventDefault(); // Prevents the default form submission
       console.log('Form submission intercepted.');
 
-      var categoryId = this.parentNode.querySelector('.categoryIdInput').value;
-      console.log(categoryId);
+      var bookId = this.parentNode.querySelector('.bookIdInput').value;
+      console.log(bookId);
 
       Swal.fire({
         title: 'Are you sure?',
@@ -83,7 +83,7 @@
       }).then((result) => {
         if (result.isConfirmed) {
           var form = this.parentNode;
-          form.action = '/admin/delete-category/' + categoryId;
+          form.action = '/admin/delete-book/' + bookId;
           form.method = 'post';
           form.submit();
         }

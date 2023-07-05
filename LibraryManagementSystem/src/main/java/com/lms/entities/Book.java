@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Book {
@@ -17,9 +17,12 @@ public class Book {
 	private String authorName;
 	private int quantity;
 	private String imageUrl;
-	@OneToOne(cascade = CascadeType.ALL)
+	
+	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "cid",referencedColumnName = "cid")
 	private Category category;
+	
+	
 	public Book() {
 		super();
 		// TODO Auto-generated constructor stub
