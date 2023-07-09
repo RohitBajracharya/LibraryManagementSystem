@@ -1,21 +1,33 @@
 package com.lms.entities;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Student {
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int sId;
 	private String studentName;
-	private String branch;
-	private String course;
-	public Student(int sId, String studentName, String branch, String course) {
-		super();
-		this.sId = sId;
-		this.studentName = studentName;
-		this.branch = branch;
-		this.course = course;
-	}
+	private String faculty;
+	private String semester;
+	private String imageUrl;
 	public Student() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Student(int sId, String studentName, String faculty, String semester, String imageUrl) {
+		super();
+		this.sId = sId;
+		this.studentName = studentName;
+		this.faculty = faculty;
+		this.semester = semester;
+		this.imageUrl = imageUrl;
+	}
+
 	public int getsId() {
 		return sId;
 	}
@@ -28,17 +40,25 @@ public class Student {
 	public void setStudentName(String studentName) {
 		this.studentName = studentName;
 	}
-	public String getBranch() {
-		return branch;
+	public String getFaculty() {
+		return faculty;
 	}
-	public void setBranch(String branch) {
-		this.branch = branch;
+	public void setFaculty(String faculty) {
+		this.faculty = faculty;
 	}
-	public String getCourse() {
-		return course;
+	public String getSemester() {
+		return semester;
 	}
-	public void setCourse(String course) {
-		this.course = course;
+	public void setSemester(String semester) {
+		this.semester = semester;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 	
 }

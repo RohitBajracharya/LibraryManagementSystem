@@ -33,7 +33,7 @@
 										class="form-control" id="exampleFormControlSelect1"
 										name="categoryName">
 										<option th:each="cat : ${category}" th:value="${cat}"
-											th:text="${cat}"></option>
+											th:text="${cat}" th:selected="${cat == book.category.categoryName}"></option>
 
 									</select>
 								</div>
@@ -50,7 +50,7 @@
 								</div>
 
 								<div class="text-center">
-								<input type="hidden" name="bId" th:value="${book.bId}"/>
+									<input type="hidden" name="bId" th:value="${book.bId}" />
 									<button type="submit" class="btn btn-info m-3">Update
 										Book</button>
 								</div>

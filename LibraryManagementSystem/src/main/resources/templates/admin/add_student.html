@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+	<section>
+		<div class="card m-3">
+			<div class="card-body">
+				<h1 class="text-center">Add Student</h1>
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-md-10 offset-md-1">
+							<form method="post" th:action="@{/admin/process-student}" th:object="${student}"
+								enctype="multipart/form-data" class="mt-3">
+								<div class="form-group">
+									<label for="exampleFormControlInput1">Student Name</label> <input
+										type="text" name="studentName" class="form-control"
+										id="exampleFormControlInput1" placeholder="Enter Student Name">
+								</div>
+								<div class="form-group">
+
+									<label for="exampleFormControlInput1">Faculty</label> <select
+										class="form-control" id="exampleFormControlSelect1"
+										name="faculty">
+										<option value="BBM">BBM</option>
+										<option value="BCA">BCA</option>
+										<option value="BHM">BHM</option>
+										<option value="BIM">BIM</option>
+										<option value="B.Sc.CSIT">B.Sc.CSIT</option>
+									</select>
+								</div>
+								<div class="form-group">
+
+									<label for="exampleFormControlInput1">Semester</label> <select
+										class="form-control" id="exampleFormControlSelect1"
+										name="semester">
+										<option value="1st">1st</option>
+										<option value="2nd">2nd</option>
+										<option value="3rd">3rd</option>
+										<option value="4th">4th</option>
+										<option value="5th">5th</option>
+										<option value="6th">6th</option>
+										<option value="7th">7th</option>
+										<option value="8th">8th</option>
+										
+									</select>
+								</div>
+								<div class="form-group">
+									<p class="text-secondary">Choose student image</p>
+									<input type="file" name="image" id="image" />
+								</div>
+
+								<div class="text-center">
+									<button type="submit" class="btn btn-info m-3">Add
+										Student</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</body>
+</html>
