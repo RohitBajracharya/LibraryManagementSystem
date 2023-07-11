@@ -15,5 +15,7 @@ public interface BookRepository extends JpaRepository<Book	, Integer>{
     
     @Query("Select b from Book b")
 	public Page<Book> findAllBook(Pageable pageable);
+    
+    public Book findByBookName(String bookName);
 
 }

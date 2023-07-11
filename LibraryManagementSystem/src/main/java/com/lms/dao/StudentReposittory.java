@@ -12,5 +12,7 @@ public interface StudentReposittory extends JpaRepository<Student, Integer>{
 
 	@Query("select s from Student s")
 	public Page<Student> findAllStudent(Pageable pageable);
+	
+	public Student findByStudentName(String studentName);
 }
 

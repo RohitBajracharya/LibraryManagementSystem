@@ -81,7 +81,7 @@ public class BookController {
 		Exception e) {
 			session.setAttribute("message", new Message("Something went wrong! Try Again", "danger"));
 		}
-		return "admin/add_book";
+		return "redirect:/admin/showBooks/0";
 	}
 
 	// handler to show Books present in database in table
