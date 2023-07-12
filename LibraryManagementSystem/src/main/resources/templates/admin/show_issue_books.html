@@ -1,0 +1,97 @@
+<!Doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="admin/base::layout(~{::section})">
+<head>
+<meta charset="UTF-8" />
+<title>Document</title>
+</head>
+<body>
+	<section>
+		<div class="card">
+			<div class="card-body">
+				<h1 class="text-center mb-4">Issued Books</h1>
+				<table class="table mt-2 text-center">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">Book Name</th>
+							<th scope="col">Student Name</th>
+							<th scope="col">Issue Date</th>
+							<th scope="col">Due Date</th>
+							<th scope="col">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="i:${issueBook}">
+							<th th:text="${i.issueId}"></th>
+							<th class="text-left" ><span
+									th:text="${i.book.bookName}"></span></th>
+							<td th:text="${i.student.studentName}"></td>
+							<td th:text="${i.issueDate}"></td>
+							<td th:text="${i.dueDate}"></td>
+							<td>
+								<div class="action-btn d-inline-flex">
+									<form id="deleteBookForm">
+										<input id="issueBookId" class="issueBookIdInput" type="hidden" th:value="${i.issueId}" />
+										<button class="btn btn-danger m-1 deleteBtn">Delete</button>
+									</form>
+									<form th:action="@{'/admin/edit-issue-book/'+${i.issueId}}"
+										method="post">
+										<button type="submit" class="btn btn-primary m-1">Update</button>
+									</form>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="pagination-container d-flex justify-content-center">
+					<nav aria-label="Page navigation" class="mt-4">
+						<ul class="pagination">
+							<li th:if="${currentPage != 0}" class="page-item"><a
+								class="page-link " href="#"
+								th:href="@{'/admin/show-issue-books/'+${currentPage-1}}">Previous</a></li>
+							<li th:classappend="${currentPage==i-1?'active':''}"
+								th:each="i:${#numbers.sequence(1,totalPages)}" class="page-item"><a
+								class="page-link" href="#"
+								th:href="@{'/admin/show-issue-books/'+${i-1}}"><span
+									th:text="${i}"></span></a></li>
+							<li th:if="${currentPage+1 != totalPages}" class="page-item"><a
+								class="page-link" href="#"
+								th:href="@{'/admin/show-issue-books/'+${currentPage+1}}">Next</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>
+		<script>
+  var deleteButtons = document.querySelectorAll('.deleteBtn');
+  deleteButtons.forEach(function(button) {
+    button.addEventListener('click', function(event) {
+      event.preventDefault(); // Prevents the default form submission
+      console.log('Form submission intercepted.');
+
+      var issueBookId = this.parentNode.querySelector('.issueBookIdInput').value;
+      console.log(issueBookId);
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          var form = this.parentNode;
+          form.action = '/admin/delete-issue-book/' + issueBookId;
+          form.method = 'post';
+          form.submit();
+        }
+      });
+    });
+  });
+</script>
+	</section>
+</body>
+</html>

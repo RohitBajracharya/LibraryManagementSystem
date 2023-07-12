@@ -1,6 +1,6 @@
 package com.lms.entities;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,10 +37,10 @@ public class IssueBook {
 	
 	@FutureOrPresent(message = "Please Enter todays date")
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private Date issueDate;
+	private LocalDate issueDate;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Future(message = "Please Enter Future date")
-	private Date dueDate;
+	private LocalDate dueDate;
 	
 	
 }
